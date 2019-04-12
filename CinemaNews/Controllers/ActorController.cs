@@ -29,5 +29,15 @@ namespace CinemaNews.Controllers
             db.SaveChanges();
             return RedirectToAction("List");
         }
+
+        //Delete one Atcor 
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            Actor actor = db.Actors.Single(act => act.Id == id);
+            db.Actors.Remove(actor);
+            db.SaveChanges();
+            return RedirectToAction("List");
+        }
     }
 }
