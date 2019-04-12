@@ -9,41 +9,54 @@
 <p>
     @Html.ActionLink("Add Actor", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            Name
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Gender)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateOfBirth)
-        </th>
-        <th></th>
-    </tr>
+@using (Html.BeginForm("Delete", "Actor", FormMethod.Post))
+{
+    <table class="table">
+        <tr>
+            <th>
 
-    @foreach (var item in Model)
-    {
-        using (Html.BeginForm("Delete", "Actor", new { id = @item.Id }, FormMethod.Post))
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfBirth)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
         {
             <tr>
                 <td>
-                    @item.FirstName @item.LastName
+                    <input type="checkbox" id="IdsCheckDelete" name="IdsCheckDelete" value="@item.Id"/>
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Gender)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateOfBirth)
-                </td>
-                <td>
+                @using (Html.BeginForm("Delete_One", "Actor", new { id = @item.Id }, FormMethod.Post))
+                {
+
+                    <td>
+                        @item.FirstName @item.LastName
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Gender)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateOfBirth)
+                    </td>
+                    <td>
                         <h4 style="display:inline"> @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |</h4>
                         <input type="submit" value="Delete" class="btn btn-danger"
                                onclick="return confirm('Are u Sure Delete Mr/Ms : @item.LastName');" />
-                </td>
+                    </td>
+                }
             </tr>
-        }
-    }
 
-</table>
+        }
+
+    </table>
+
+    <input type="submit" value="Delete Selected Actor" id="btnDeleteAll" class="btn btn-danger" />
+}

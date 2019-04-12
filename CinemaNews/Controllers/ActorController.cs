@@ -31,11 +31,21 @@ namespace CinemaNews.Controllers
         }
 
         //Delete one Atcor 
-        [HttpPost]
-        public ActionResult Delete(int id)
+        [HttpPost , ActionName("Delete_One")]
+        public ActionResult Delete_One(int id)
         {
             Actor actor = db.Actors.Single(act => act.Id == id);
             db.Actors.Remove(actor);
+            db.SaveChanges();
+
+            return RedirectToAction("List");
+        }
+
+        //Delete more than one Actor 
+        [HttpPost, ActionName("Delete")]
+        public ActionResult Delete(IEnumerable<int> IdsCheckDelete )
+        {
+            db.Actors.Where(act => IdsCheckDelete.Contains(act.Id)).ToList().ForEach(delAct => db.Actors.Remove(delAct));
             db.SaveChanges();
             return RedirectToAction("List");
         }
