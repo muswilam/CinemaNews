@@ -5,6 +5,38 @@
 }
 
 <h2>Actors</h2>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+<script type="text/javascript" language="javascript">
+    $(function () {
+        $("#checkAll").click(function () {
+            $("input[name='CheckDelete']").prop("checked", this.checked);
+        });
+        $("input[name='CheckDelete']").click(function () {
+            if($("input[name='CheckDelete']").length == $("input[name='CheckDelete']:checked").length)
+            {
+                $("#checkAll").prop("checked", true);
+            }
+            else 
+            {
+                $("#checkAll").removeProp("checked");
+            }
+        });
+        $("#btnDeleteAll").click(function () {
+            var count = $("input[name='CheckDelete']:checked").length;
+            if(count == 0)
+            {
+                alert("No Actor is Selected to Delete.");
+                return false;
+            }
+            else
+            {
+                return confirm(count + " Actor(s) will be Deleted.");
+            }
+        });
+    });
+
+</script>
 
 <p>
     @Html.ActionLink("Add Actor", "Create")
@@ -14,16 +46,16 @@
     <table class="table">
         <tr>
             <th>
-
+                <input type="checkbox" id="checkAll" /> <br /> <text style="font-size:small">All</text>
             </th>
             <th>
-                Name
+               <h3><b>Name</b></h3> 
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Gender)
+                <h3><b> @Html.DisplayNameFor(model => model.Gender)</b></h3>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DateOfBirth)
+                <h3><b> @Html.DisplayNameFor(model => model.DateOfBirth)</b></h3>
             </th>
             <th></th>
         </tr>
@@ -32,7 +64,7 @@
         {
             <tr>
                 <td>
-                    <input type="checkbox" id="IdsCheckDelete" name="IdsCheckDelete" value="@item.Id"/>
+                    <input type="checkbox" id="IdsCheckDelete" name="CheckDelete" value="@item.Id"/>
                 </td>
                 @using (Html.BeginForm("Delete_One", "Actor", new { id = @item.Id }, FormMethod.Post))
                 {

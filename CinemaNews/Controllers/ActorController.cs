@@ -43,9 +43,9 @@ namespace CinemaNews.Controllers
 
         //Delete more than one Actor 
         [HttpPost, ActionName("Delete")]
-        public ActionResult Delete(IEnumerable<int> IdsCheckDelete )
+        public ActionResult Delete(IEnumerable<int> CheckDelete)
         {
-            db.Actors.Where(act => IdsCheckDelete.Contains(act.Id)).ToList().ForEach(delAct => db.Actors.Remove(delAct));
+            db.Actors.Where(act => CheckDelete.Contains(act.Id)).ToList().ForEach(delAct => db.Actors.Remove(delAct));
             db.SaveChanges();
             return RedirectToAction("List");
         }
