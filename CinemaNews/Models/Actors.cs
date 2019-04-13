@@ -10,6 +10,13 @@ namespace CinemaNews.Models
     [MetadataType(typeof(ActorMetadata))]
     public partial class Actor
     {
+        public int Age
+        {
+            get
+            {
+                return DateTime.Today.Year - Convert.ToDateTime(DateOfBirth).Year;
+            }
+        }
     }
     //customize Properties 
     public class ActorMetadata
@@ -38,5 +45,6 @@ namespace CinemaNews.Models
         [DataType(DataType.Url)]
         [DisplayName("Instagram Profile")]
         public string Profile { get; set; }
+
     }
 }
