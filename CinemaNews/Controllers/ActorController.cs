@@ -76,5 +76,11 @@ namespace CinemaNews.Controllers
                 return View(actor);
             }
         }
+
+        //Actor Details
+        public ActionResult Details(int id)
+        {
+            return View(db.Actors.Single(act => act.Id == id));
+        }
     }
 }

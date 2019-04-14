@@ -5,7 +5,7 @@
 }
 
 <h2>Actors</h2>
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery-1.12.4.min.js"></script>
 
 <script type="text/javascript" language="javascript">
     $(function () {
@@ -13,24 +13,20 @@
             $("input[name='CheckDelete']").prop("checked", this.checked);
         });
         $("input[name='CheckDelete']").click(function () {
-            if($("input[name='CheckDelete']").length == $("input[name='CheckDelete']:checked").length)
-            {
+            if ($("input[name='CheckDelete']").length == $("input[name='CheckDelete']:checked").length) {
                 $("#checkAll").prop("checked", true);
             }
-            else 
-            {
+            else {
                 $("#checkAll").removeProp("checked");
             }
         });
         $("#btnDeleteAll").click(function () {
             var count = $("input[name='CheckDelete']:checked").length;
-            if(count == 0)
-            {
+            if (count == 0) {
                 alert("No Actor is Selected to Delete.");
                 return false;
             }
-            else
-            {
+            else {
                 return confirm(count + " Actor(s) will be Deleted.");
             }
         });
@@ -90,7 +86,7 @@
                 {
 
                     <td>
-                        @item.FirstName @item.LastName
+                        @Html.ActionLink(@item.FirstName +" "+ @item.LastName, "Details", new { id =item.Id})
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Gender)

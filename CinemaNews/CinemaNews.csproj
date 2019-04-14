@@ -211,6 +211,7 @@
     <Content Include="Views\Actor\List.cshtml" />
     <Content Include="Views\Actor\Create.cshtml" />
     <Content Include="Views\Actor\Edit.cshtml" />
+    <Content Include="Views\Actor\Details.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

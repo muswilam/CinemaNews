@@ -34,7 +34,6 @@ namespace CinemaNews.Models
 
         [DisplayName("Birth Date")]
         [DisplayFormat(DataFormatString = "{0:d}")]
-        [DataType(DataType.Date)]
         [Required(ErrorMessage = "Please, Enter Date Of Birth.")]
         public Nullable<System.DateTime> DateOfBirth { get; set; }
 
