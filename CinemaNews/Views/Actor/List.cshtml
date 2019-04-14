@@ -42,6 +42,7 @@
             $("#txtAll").toggle();
             $("input[name='CheckDelete']").toggle();
             $("#btnDeleteAll").toggle();
+            $("a[name='link']").toggle();
         });
     });
 
@@ -79,7 +80,11 @@
         {
             <tr>
                 <td>
-                    <input type="checkbox" id="IdsCheckDelete" name="CheckDelete" value="@item.Id" hidden/>
+                    <h4>
+                        <input type="checkbox" id="IdsCheckDelete" name="CheckDelete" value="@item.Id" hidden /> 
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @style = "display:none" , @name = "link" })
+                    </h4>
+
                 </td>
                 @using (Html.BeginForm("Delete_One", "Actor", new { id = @item.Id }, FormMethod.Post))
                 {
@@ -98,7 +103,7 @@
                     </td>
                     <td>
                         <input type="submit" value="Delete" class="btn btn-danger"
-                               onclick="return confirm('Are u Sure Delete Mr/Ms : @item.LastName');" />
+                               onclick="return confirm('Are u Sure Delete Mr/Ms : @item.LastName');" /> 
                     </td>
                 }
             </tr>

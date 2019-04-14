@@ -49,5 +49,32 @@ namespace CinemaNews.Controllers
             db.SaveChanges();
             return RedirectToAction("List");
         }
+
+        //Edit one Actor Info 
+        [AcceptVerbs(HttpVerbs.Get)]
+        public ActionResult Edit(int id)
+        {
+            return View(db.Actors.Single(act => act.Id == id));
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Actor actor)
+        {
+            if (ModelState.IsValid)
+            {
+                Actor actorFromDb = db.Actors.Find(actor.Id);
+                actorFromDb.Awards = actor.Awards;
+                actorFromDb.IMDb = actor.IMDb;
+                actorFromDb.Profile = actor.Profile;
+
+                db.Entry(actorFromDb).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("List");
+            }
+            else
+            {
+                return View(actor);
+            }
+        }
     }
 }
