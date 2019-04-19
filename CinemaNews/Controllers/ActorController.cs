@@ -7,7 +7,7 @@ using CinemaNews.Models;
 
 namespace CinemaNews.Controllers
 {
-    [HandleError]
+
     public class ActorController : Controller
     {
         private DBHollywoodContext db = new DBHollywoodContext();
@@ -53,8 +53,11 @@ namespace CinemaNews.Controllers
 
         //Edit one Actor Info 
         [AcceptVerbs(HttpVerbs.Get)]
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
+            if(id == null)
+                throw new Exception();
+            else
             return View(db.Actors.Single(act => act.Id == id));
         }
 
@@ -78,8 +81,11 @@ namespace CinemaNews.Controllers
             }
         }
 
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
+            if (id == null)
+                throw new Exception();
+            else
             return View(db.Actors.Single(act => act.Id == id));
         }
     }

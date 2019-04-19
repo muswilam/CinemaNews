@@ -13,7 +13,16 @@ namespace CinemaNews
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            
+            FilterConfig.RegisterFilterCollection(GlobalFilters.Filters);
+        }
+
+    }
+    //Handle errors all over controllers
+    public class FilterConfig
+    {
+        internal static void RegisterFilterCollection(GlobalFilterCollection filters)
+        {
+            filters.Add(new HandleErrorAttribute());
         }
     }
 }

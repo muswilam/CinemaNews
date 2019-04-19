@@ -215,6 +215,7 @@
     <Content Include="Views\Actor\Details.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\URL.cshtml" />
     <Content Include="Views\Shared\NotFound.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
