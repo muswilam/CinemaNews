@@ -39,7 +39,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.DateOfBirth)
+            @Html.DisplayFor(model => model.DateOfBirth) (@Html.DisplayFor(model => model.Age) Years)
         </dd>
 
         <dt>
@@ -64,14 +64,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.Profile)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Age)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Age)
         </dd>
 
     </dl>

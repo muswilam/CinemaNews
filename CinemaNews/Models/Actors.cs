@@ -41,6 +41,7 @@ namespace CinemaNews.Models
         [DisplayName("IMDb Profile")]
         public string IMDb { get; set; }
 
+        
         [DataType(DataType.Url)]
         [DisplayName("Instagram Profile")]
         public string Profile { get; set; }
