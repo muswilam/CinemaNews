@@ -7,6 +7,7 @@ using CinemaNews.Models;
 
 namespace CinemaNews.Controllers
 {
+    [HandleError]
     public class ActorController : Controller
     {
         private DBHollywoodContext db = new DBHollywoodContext();
