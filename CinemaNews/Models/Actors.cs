@@ -14,7 +14,12 @@ namespace CinemaNews.Models
         {
             get
             {
-                return DateTime.Today.Year - Convert.ToDateTime(DateOfBirth).Year;
+                DateTime today = DateTime.Today;
+
+                int todayDate = (today.Year * 100 + today.Month) * 100 + today.Day;
+                int birthDate = (DateOfBirth.Value.Year * 100 + DateOfBirth.Value.Month) * 100 + DateOfBirth.Value.Day;
+
+                return (todayDate - birthDate) / 10000;
             }
         }
     }
