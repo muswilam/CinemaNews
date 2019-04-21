@@ -7,21 +7,25 @@
 
 <h2>Add New</h2>
 
+
 <script src="~/Scripts/jquery-1.12.4.min.js"></script>
 <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
 <link href="~/Content/Site.css" rel="stylesheet" />
 <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
 
 <script type="text/javascript">
-    var earliest_date = new Date(new Date().setFullYear(new Date().getFullYear() - 100))
-    var latest_date = new Date(new Date().setFullYear(new Date().getFullYear() - 18))
+    //var earliest_date = new Date(new Date().setFullYear(new Date().getFullYear() - 150))
+    var latest_date = new Date(new Date().setFullYear(new Date().getFullYear() - 12))
     $(function () {
-        $("input:text.date").datepicker({
+        $("input:text.datePicker").datepicker({
             dateFormat: "mm/dd/yy",
-            minDate: earliest_date,
-            maxDate: latest_date
-        })
-    })
+            //minDate: earliest_date,
+            maxDate: latest_date,
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "1900:2050"
+        });
+    });
 </script>
 
 @using (Html.BeginForm()) 

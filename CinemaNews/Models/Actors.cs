@@ -33,7 +33,7 @@ namespace CinemaNews.Models
         public string Gender { get; set; }
 
         [DisplayName("Birth Date")]
-        [DisplayFormat(DataFormatString = "{0:d}")]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}" , ApplyFormatInEditMode=true)]
         [Required(ErrorMessage = "Please, Enter Date Of Birth.")]
         public Nullable<System.DateTime> DateOfBirth { get; set; }
 
