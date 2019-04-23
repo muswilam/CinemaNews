@@ -77,16 +77,16 @@
             <tr>
                 <td>
                     <h4>
-                        <input type="checkbox" id="IdsCheckDelete" name="CheckDelete" value="@item.Id" hidden /> 
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @style = "display:none" , @name = "link" })
+                        <input type="checkbox" id="IdsCheckDelete" name="CheckDelete" value="@item.Actor_Id" hidden /> 
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Actor_Id }, new { @style = "display:none" , @name = "link" })
                     </h4>
 
                 </td>
-                @using (Html.BeginForm("Delete_One", "Actor", new { id = @item.Id }, FormMethod.Post))
+                @using (Html.BeginForm("Delete_One", "Actor", new { id = @item.Actor_Id }, FormMethod.Post))
                 {
 
                     <td>
-                        @Html.ActionLink(@item.FirstName +" "+ @item.LastName, "Details", new { id =item.Id})
+                        @Html.ActionLink(@item.FirstName +" "+ @item.LastName, "Details", new { id =item.Actor_Id})
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Gender)

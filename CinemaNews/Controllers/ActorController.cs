@@ -35,7 +35,7 @@ namespace CinemaNews.Controllers
         [HttpPost , ActionName("Delete_One")]
         public ActionResult Delete_One(int id)
         {
-            Actor actor = db.Actors.Single(act => act.Id == id);
+            Actor actor = db.Actors.Single(act => act.Actor_Id == id);
             db.Actors.Remove(actor);
             db.SaveChanges();
 
@@ -46,7 +46,7 @@ namespace CinemaNews.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult Delete(IEnumerable<int> CheckDelete)
         {
-            db.Actors.Where(act => CheckDelete.Contains(act.Id)).ToList().ForEach(delAct => db.Actors.Remove(delAct));
+            db.Actors.Where(act => CheckDelete.Contains(act.Actor_Id)).ToList().ForEach(delAct => db.Actors.Remove(delAct));
             db.SaveChanges();
             return RedirectToAction("List");
         }
@@ -58,7 +58,7 @@ namespace CinemaNews.Controllers
             if(id == null)
                 throw new Exception();
             else
-            return View(db.Actors.Single(act => act.Id == id));
+            return View(db.Actors.Single(act => act.Actor_Id== id));
         }
 
         [HttpPost]
@@ -66,7 +66,7 @@ namespace CinemaNews.Controllers
         {
             if (ModelState.IsValid)
             {
-                Actor actorFromDb = db.Actors.Find(actor.Id);
+                Actor actorFromDb = db.Actors.Find(actor.Actor_Id);
                 actorFromDb.Awards = actor.Awards;
                 actorFromDb.IMDb = actor.IMDb;
                 actorFromDb.Profile = actor.Profile;
@@ -86,7 +86,7 @@ namespace CinemaNews.Controllers
             if (id == null)
                 throw new Exception();
             else
-            return View(db.Actors.Single(act => act.Id == id));
+            return View(db.Actors.Single(act => act.Actor_Id == id));
         }
     }
 }
