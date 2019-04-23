@@ -12,26 +12,19 @@ namespace CinemaNews.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Actor
+    public partial class Academy_Award
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Actor()
+        public Academy_Award()
         {
-            this.Actor_Movie_Mapping = new HashSet<Actor_Movie_Mapping>();
+            this.tblActors = new HashSet<Actor>();
         }
     
-        public int Actor_Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Gender { get; set; }
-        public Nullable<System.DateTime> DateOfBirth { get; set; }
-        public string Awards { get; set; }
-        public string IMDb { get; set; }
-        public string Profile { get; set; }
-        public Nullable<int> Academy_Id { get; set; }
+        public int Academy_Id { get; set; }
+        public int Year { get; set; }
+        public string Movie { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Actor_Movie_Mapping> Actor_Movie_Mapping { get; set; }
-        public virtual Academy_Award Academy_Award { get; set; }
+        public virtual ICollection<Actor> tblActors { get; set; }
     }
 }

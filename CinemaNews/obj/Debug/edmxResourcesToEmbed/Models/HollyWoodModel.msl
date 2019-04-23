@@ -4,6 +4,7 @@
     <EntitySetMapping Name="Actors">
       <EntityTypeMapping TypeName="Models.Actor">
         <MappingFragment StoreEntitySet="tblActor">
+          <ScalarProperty Name="Academy_Id" ColumnName="Academy_Id" />
           <ScalarProperty Name="Actor_Id" ColumnName="Actor_Id" />
           <ScalarProperty Name="FirstName" ColumnName="FirstName" />
           <ScalarProperty Name="LastName" ColumnName="LastName" />
@@ -12,6 +13,35 @@
           <ScalarProperty Name="Awards" ColumnName="Awards" />
           <ScalarProperty Name="IMDb" ColumnName="IMDb" />
           <ScalarProperty Name="Profile" ColumnName="Profile" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Movies">
+      <EntityTypeMapping TypeName="Models.Movie">
+        <MappingFragment StoreEntitySet="tblMovie">
+          <ScalarProperty Name="Duration" ColumnName="Duration" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Movie_Id" ColumnName="Movie_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Actor_Movie_Mapping">
+      <EntityTypeMapping TypeName="Models.Actor_Movie_Mapping">
+        <MappingFragment StoreEntitySet="Actor_Movie_Mapping">
+          <ScalarProperty Name="Movie_Id" ColumnName="Movie_Id" />
+          <ScalarProperty Name="Actor_Id" ColumnName="Actor_Id" />
+          <ScalarProperty Name="Mapping_ID" ColumnName="Mapping_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Academy_Award">
+      <EntityTypeMapping TypeName="Models.Academy_Award">
+        <MappingFragment StoreEntitySet="Academy_Award">
+          <ScalarProperty Name="Movie" ColumnName="Movie" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Academy_Id" ColumnName="Academy_Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

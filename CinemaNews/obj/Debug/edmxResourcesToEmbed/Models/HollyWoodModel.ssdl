@@ -1,5 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="Models.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Academy_Award">
+    <Key>
+      <PropertyRef Name="Academy_Id" />
+    </Key>
+    <Property Name="Academy_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Year" Type="int" Nullable="false" />
+    <Property Name="Movie" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Actor_Movie_Mapping">
+    <Key>
+      <PropertyRef Name="Mapping_ID" />
+    </Key>
+    <Property Name="Mapping_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Actor_Id" Type="int" />
+    <Property Name="Movie_Id" Type="int" />
+  </EntityType>
   <EntityType Name="tblActor">
     <Key>
       <PropertyRef Name="Actor_Id" />
@@ -12,8 +28,70 @@
     <Property Name="Awards" Type="nvarchar" MaxLength="200" />
     <Property Name="IMDb" Type="nvarchar" MaxLength="100" />
     <Property Name="Profile" Type="nvarchar" MaxLength="100" />
+    <Property Name="Academy_Id" Type="int" />
   </EntityType>
+  <EntityType Name="tblMovie">
+    <Key>
+      <PropertyRef Name="Movie_Id" />
+    </Key>
+    <Property Name="Movie_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Category" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Year" Type="int" Nullable="false" />
+    <Property Name="Duration" Type="time" Precision="7" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Actor_Movie_Mapping_Actor">
+    <End Role="tblActor" Type="Self.tblActor" Multiplicity="0..1" />
+    <End Role="Actor_Movie_Mapping" Type="Self.Actor_Movie_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblActor">
+        <PropertyRef Name="Actor_Id" />
+      </Principal>
+      <Dependent Role="Actor_Movie_Mapping">
+        <PropertyRef Name="Actor_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Actor_Movie_Mapping_Movie">
+    <End Role="tblMovie" Type="Self.tblMovie" Multiplicity="0..1" />
+    <End Role="Actor_Movie_Mapping" Type="Self.Actor_Movie_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblMovie">
+        <PropertyRef Name="Movie_Id" />
+      </Principal>
+      <Dependent Role="Actor_Movie_Mapping">
+        <PropertyRef Name="Movie_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblActor_Academy_Award">
+    <End Role="Academy_Award" Type="Self.Academy_Award" Multiplicity="0..1" />
+    <End Role="tblActor" Type="Self.tblActor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Academy_Award">
+        <PropertyRef Name="Academy_Id" />
+      </Principal>
+      <Dependent Role="tblActor">
+        <PropertyRef Name="Academy_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="ModelsStoreContainer">
+    <EntitySet Name="Academy_Award" EntityType="Self.Academy_Award" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Actor_Movie_Mapping" EntityType="Self.Actor_Movie_Mapping" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblActor" EntityType="Self.tblActor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblMovie" EntityType="Self.tblMovie" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Actor_Movie_Mapping_Actor" Association="Self.FK_Actor_Movie_Mapping_Actor">
+      <End Role="tblActor" EntitySet="tblActor" />
+      <End Role="Actor_Movie_Mapping" EntitySet="Actor_Movie_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Actor_Movie_Mapping_Movie" Association="Self.FK_Actor_Movie_Mapping_Movie">
+      <End Role="tblMovie" EntitySet="tblMovie" />
+      <End Role="Actor_Movie_Mapping" EntitySet="Actor_Movie_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblActor_Academy_Award" Association="Self.FK_tblActor_Academy_Award">
+      <End Role="Academy_Award" EntitySet="Academy_Award" />
+      <End Role="tblActor" EntitySet="tblActor" />
+    </AssociationSet>
   </EntityContainer>
 </Schema>

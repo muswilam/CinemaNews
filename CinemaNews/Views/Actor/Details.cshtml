@@ -65,7 +65,13 @@
         <dd>
             @Html.DisplayFor(model => model.Profile)
         </dd>
-
+        @if(Model.Academy_Id != null)
+        { 
+        <dt> Academy Award </dt>
+        <dd>
+            @Html.DisplayFor(model=>model.Academy_Award.Movie) ( @Model.Academy_Award.Year )
+        </dd>
+        }
     </dl>
 </div>
 <p>
