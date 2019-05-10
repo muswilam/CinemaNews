@@ -18,7 +18,7 @@ namespace CinemaNews.Models
         public Nullable<int> Actor_Id { get; set; }
         public Nullable<int> Movie_Id { get; set; }
     
-        public virtual Actor tblActor { get; set; }
-        public virtual Movie tblMovie { get; set; }
+        public virtual Actor Actor { get; set; }
+        public virtual Movie Movie { get; set; }
     }
 }

@@ -155,8 +155,8 @@
           <Property Name="Mapping_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Actor_Id" Type="Int32" />
           <Property Name="Movie_Id" Type="Int32" />
-          <NavigationProperty Name="tblActor" Relationship="Models.FK_Actor_Movie_Mapping_Actor" FromRole="Actor_Movie_Mapping" ToRole="Actor" />
-          <NavigationProperty Name="tblMovie" Relationship="Models.FK_Actor_Movie_Mapping_Movie" FromRole="Actor_Movie_Mapping" ToRole="Movie" />
+          <NavigationProperty Name="Actor" Relationship="Models.FK_Actor_Movie_Mapping_Actor" FromRole="Actor_Movie_Mapping" ToRole="Actor" />
+          <NavigationProperty Name="Movie" Relationship="Models.FK_Actor_Movie_Mapping_Movie" FromRole="Actor_Movie_Mapping" ToRole="Movie" />
         </EntityType>
         <Association Name="FK_Actor_Movie_Mapping_Actor">
           <End Type="Models.Actor" Role="Actor" Multiplicity="0..1" />

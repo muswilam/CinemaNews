@@ -224,7 +224,7 @@
     <Content Include="Views\Actor\Details.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\URL.cshtml" />
     <Content Include="Views\Shared\NotFound.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\Error1.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
