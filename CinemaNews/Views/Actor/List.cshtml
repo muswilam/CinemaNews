@@ -10,45 +10,15 @@
 
 @*<script src="~/Scripts/jquery-1.12.4.min.js"></script>*@
 
+<script src="~/Custom_Scripts/CheckBox_SelectALl.js"></script>
+
 <script type="text/javascript" language="javascript">
+
     $(function () {
-        $("#checkAll").click(function () {
-            $("input[name='CheckDelete']").prop("checked", this.checked);
-        });
-        $("input[name='CheckDelete']").click(function () {
-            if ($("input[name='CheckDelete']").length == $("input[name='CheckDelete']:checked").length) {
-                $("#checkAll").prop("checked", true);
-            }
-            else {
-                $("#checkAll").removeProp("checked");
-            }
-        });
-        $("#btnDeleteAll").click(function () {
-            var count = $("input[name='CheckDelete']:checked").length;
-            if (count == 0) {
-                alert("No Actor is Selected to Delete.");
-                return false;
-            }
-            else {
-                return confirm(count + " Actor(s) will be Deleted.");
-            }
-        });
-        $("#btnSelect").click(function () {
-            var Toggle = $(this).val() === "Select";
-            $(this).val(Toggle ? "Cancel" : "Select");
-
-            $("#checkAll").toggle();
-            $("#txtAll").toggle();
-            $("input[name='CheckDelete']").toggle();
-            $("#btnDeleteAll").toggle();
-            $("a[name='link']").toggle();
-        });
-
         $('#txtSearch').autocomplete({
             source: '@Url.Action("GetCompleteSearch")'
         });
     });
-
 </script>
 
 <br />
