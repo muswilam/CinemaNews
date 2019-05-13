@@ -5,6 +5,22 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="Models.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Academy_Award">
+          <Key>
+            <PropertyRef Name="Academy_Id" />
+          </Key>
+          <Property Name="Academy_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="Movie" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Actor_Movie_Mapping">
+          <Key>
+            <PropertyRef Name="Mapping_ID" />
+          </Key>
+          <Property Name="Mapping_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Actor_Id" Type="int" />
+          <Property Name="Movie_Id" Type="int" />
+        </EntityType>
         <EntityType Name="tblActor">
           <Key>
             <PropertyRef Name="Actor_Id" />
@@ -17,9 +33,71 @@
           <Property Name="Awards" Type="nvarchar" MaxLength="200" />
           <Property Name="IMDb" Type="nvarchar" MaxLength="100" />
           <Property Name="Profile" Type="nvarchar" MaxLength="100" />
+          <Property Name="Academy_Id" Type="int" />
         </EntityType>
+        <EntityType Name="tblMovie">
+          <Key>
+            <PropertyRef Name="Movie_Id" />
+          </Key>
+          <Property Name="Movie_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Category" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="Duration" Type="time" Precision="7" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Actor_Movie_Mapping_Actor">
+          <End Role="tblActor" Type="Self.tblActor" Multiplicity="0..1" />
+          <End Role="Actor_Movie_Mapping" Type="Self.Actor_Movie_Mapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblActor">
+              <PropertyRef Name="Actor_Id" />
+            </Principal>
+            <Dependent Role="Actor_Movie_Mapping">
+              <PropertyRef Name="Actor_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Actor_Movie_Mapping_Movie">
+          <End Role="tblMovie" Type="Self.tblMovie" Multiplicity="0..1" />
+          <End Role="Actor_Movie_Mapping" Type="Self.Actor_Movie_Mapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMovie">
+              <PropertyRef Name="Movie_Id" />
+            </Principal>
+            <Dependent Role="Actor_Movie_Mapping">
+              <PropertyRef Name="Movie_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblActor_Academy_Award">
+          <End Role="Academy_Award" Type="Self.Academy_Award" Multiplicity="0..1" />
+          <End Role="tblActor" Type="Self.tblActor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Academy_Award">
+              <PropertyRef Name="Academy_Id" />
+            </Principal>
+            <Dependent Role="tblActor">
+              <PropertyRef Name="Academy_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ModelsStoreContainer">
+          <EntitySet Name="Academy_Award" EntityType="Self.Academy_Award" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Actor_Movie_Mapping" EntityType="Self.Actor_Movie_Mapping" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblActor" EntityType="Self.tblActor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblMovie" EntityType="Self.tblMovie" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Actor_Movie_Mapping_Actor" Association="Self.FK_Actor_Movie_Mapping_Actor">
+            <End Role="tblActor" EntitySet="tblActor" />
+            <End Role="Actor_Movie_Mapping" EntitySet="Actor_Movie_Mapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Actor_Movie_Mapping_Movie" Association="Self.FK_Actor_Movie_Mapping_Movie">
+            <End Role="tblMovie" EntitySet="tblMovie" />
+            <End Role="Actor_Movie_Mapping" EntitySet="Actor_Movie_Mapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblActor_Academy_Award" Association="Self.FK_tblActor_Academy_Award">
+            <End Role="Academy_Award" EntitySet="Academy_Award" />
+            <End Role="tblActor" EntitySet="tblActor" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -37,10 +115,94 @@
           <Property Name="Awards" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="IMDb" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Profile" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Actor_Movie_Mapping" Relationship="Models.FK_Actor_Movie_Mapping_Actor" FromRole="Actor" ToRole="Actor_Movie_Mapping" />
+          <Property Name="Academy_Id" Type="Int32" />
+          <NavigationProperty Name="Academy_Award" Relationship="Models.FK_tblActor_Academy_Award" FromRole="Actor" ToRole="Academy_Award" />
         </EntityType>
         <EntityContainer Name="DBHollywoodContext" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Actors" EntityType="Models.Actor" />
+          <EntitySet Name="Movies" EntityType="Models.Movie" />
+          <EntitySet Name="Actor_Movie_Mapping" EntityType="Models.Actor_Movie_Mapping" />
+          <AssociationSet Name="FK_Actor_Movie_Mapping_Actor" Association="Models.FK_Actor_Movie_Mapping_Actor">
+            <End Role="Actor" EntitySet="Actors" />
+            <End Role="Actor_Movie_Mapping" EntitySet="Actor_Movie_Mapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Actor_Movie_Mapping_Movie" Association="Models.FK_Actor_Movie_Mapping_Movie">
+            <End Role="Movie" EntitySet="Movies" />
+            <End Role="Actor_Movie_Mapping" EntitySet="Actor_Movie_Mapping" />
+          </AssociationSet>
+          <EntitySet Name="Academy_Award" EntityType="Models.Academy_Award" />
+          <AssociationSet Name="FK_tblActor_Academy_Award" Association="Models.FK_tblActor_Academy_Award">
+            <End Role="Academy_Award" EntitySet="Academy_Award" />
+            <End Role="Actor" EntitySet="Actors" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Movie">
+          <Key>
+            <PropertyRef Name="Movie_Id" />
+          </Key>
+          <Property Name="Movie_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Category" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="Duration" Type="Time" Nullable="false" Precision="7" />
+          <NavigationProperty Name="Actor_Movie_Mapping" Relationship="Models.FK_Actor_Movie_Mapping_Movie" FromRole="Movie" ToRole="Actor_Movie_Mapping" />
+        </EntityType>
+        <EntityType Name="Actor_Movie_Mapping">
+          <Key>
+            <PropertyRef Name="Mapping_ID" />
+          </Key>
+          <Property Name="Mapping_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Actor_Id" Type="Int32" />
+          <Property Name="Movie_Id" Type="Int32" />
+          <NavigationProperty Name="Actor" Relationship="Models.FK_Actor_Movie_Mapping_Actor" FromRole="Actor_Movie_Mapping" ToRole="Actor" />
+          <NavigationProperty Name="Movie" Relationship="Models.FK_Actor_Movie_Mapping_Movie" FromRole="Actor_Movie_Mapping" ToRole="Movie" />
+        </EntityType>
+        <Association Name="FK_Actor_Movie_Mapping_Actor">
+          <End Type="Models.Actor" Role="Actor" Multiplicity="0..1" />
+          <End Type="Models.Actor_Movie_Mapping" Role="Actor_Movie_Mapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Actor">
+              <PropertyRef Name="Actor_Id" />
+            </Principal>
+            <Dependent Role="Actor_Movie_Mapping">
+              <PropertyRef Name="Actor_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Actor_Movie_Mapping_Movie">
+          <End Type="Models.Movie" Role="Movie" Multiplicity="0..1" />
+          <End Type="Models.Actor_Movie_Mapping" Role="Actor_Movie_Mapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movie">
+              <PropertyRef Name="Movie_Id" />
+            </Principal>
+            <Dependent Role="Actor_Movie_Mapping">
+              <PropertyRef Name="Movie_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Academy_Award">
+          <Key>
+            <PropertyRef Name="Academy_Id" />
+          </Key>
+          <Property Name="Academy_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="Movie" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblActors" Relationship="Models.FK_tblActor_Academy_Award" FromRole="Academy_Award" ToRole="Actor" />
+        </EntityType>
+        <Association Name="FK_tblActor_Academy_Award">
+          <End Type="Models.Academy_Award" Role="Academy_Award" Multiplicity="0..1" />
+          <End Type="Models.Actor" Role="Actor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Academy_Award">
+              <PropertyRef Name="Academy_Id" />
+            </Principal>
+            <Dependent Role="Actor">
+              <PropertyRef Name="Academy_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -50,6 +212,7 @@
           <EntitySetMapping Name="Actors">
             <EntityTypeMapping TypeName="Models.Actor">
               <MappingFragment StoreEntitySet="tblActor">
+                <ScalarProperty Name="Academy_Id" ColumnName="Academy_Id" />
                 <ScalarProperty Name="Actor_Id" ColumnName="Actor_Id" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
@@ -58,6 +221,35 @@
                 <ScalarProperty Name="Awards" ColumnName="Awards" />
                 <ScalarProperty Name="IMDb" ColumnName="IMDb" />
                 <ScalarProperty Name="Profile" ColumnName="Profile" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Movies">
+            <EntityTypeMapping TypeName="Models.Movie">
+              <MappingFragment StoreEntitySet="tblMovie">
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Movie_Id" ColumnName="Movie_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Actor_Movie_Mapping">
+            <EntityTypeMapping TypeName="Models.Actor_Movie_Mapping">
+              <MappingFragment StoreEntitySet="Actor_Movie_Mapping">
+                <ScalarProperty Name="Movie_Id" ColumnName="Movie_Id" />
+                <ScalarProperty Name="Actor_Id" ColumnName="Actor_Id" />
+                <ScalarProperty Name="Mapping_ID" ColumnName="Mapping_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Academy_Award">
+            <EntityTypeMapping TypeName="Models.Academy_Award">
+              <MappingFragment StoreEntitySet="Academy_Award">
+                <ScalarProperty Name="Movie" ColumnName="Movie" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Academy_Id" ColumnName="Academy_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

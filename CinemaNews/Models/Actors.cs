@@ -21,6 +21,7 @@ namespace CinemaNews.Models
 
                 return (todayDate - birthDate) / 10000;
             }
+         
         }
     }
     //customize Properties 

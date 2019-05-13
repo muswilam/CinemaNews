@@ -26,5 +26,8 @@ namespace CinemaNews.Models
         }
     
         public virtual DbSet<Actor> Actors { get; set; }
+        public virtual DbSet<Movie> Movies { get; set; }
+        public virtual DbSet<Actor_Movie_Mapping> Actor_Movie_Mapping { get; set; }
+        public virtual DbSet<Academy_Award> Academy_Award { get; set; }
     }
 }

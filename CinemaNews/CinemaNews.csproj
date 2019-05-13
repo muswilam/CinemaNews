@@ -183,10 +183,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Academy_Award.cs">
+      <DependentUpon>HollyWoodModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Actor.cs">
       <DependentUpon>HollyWoodModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Actors.cs" />
+    <Compile Include="Models\Actor_Movie_Mapping.cs">
+      <DependentUpon>HollyWoodModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\HollyWoodModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -201,6 +207,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>HollyWoodModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Movie.cs">
+      <DependentUpon>HollyWoodModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -232,7 +241,7 @@
     <Content Include="Views\Actor\Details.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\URL.cshtml" />
     <Content Include="Views\Shared\NotFound.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\Error1.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
