@@ -12,22 +12,33 @@
 
 <script src="~/Custom_Scripts/CheckBox_SelectALl.js"></script>
 
-<script type="text/javascript" language="javascript">
-    $(function () {
-        $('#txtSearch').autocomplete({
-            source: '@Url.Action("GetCompleteSearch")'
+@*<script type="text/javascript" language="javascript">
+        $(function () {
+            $('#txtSearch').autocomplete({
+                source: '@Url.Action("GetCompleteSearch")'
+            });
         });
-    });
-</script>
+    </script>
+
+    <br />
+    <div style="float:right">
+        @using (Html.BeginForm("List", "Actor"))
+        {
+            @Html.TextBox("searchTerm", null, new { @class = "form-control", id = "txtSearch" }) <br />
+            <input type="submit" value="Search" class="btn btn-primary" />
+        }
+    </div>*@
 
 <br />
-<div style="float:right">
-    @using (Html.BeginForm("List", "Actor"))
-    {
-        @Html.TextBox("searchTerm", null, new { @class = "form-control", id = "txtSearch" }) <br />
-        <input type="submit" value="Search" class="btn btn-primary" />
-    }
-</div>
+@using (Html.BeginForm("List", "Actor", FormMethod.Get))
+{
+    <div style="float:right">
+        Search By : @Html.RadioButton("searchBy", "Name", true) Name
+        @Html.RadioButton("searchBy", "Gender") Gender <br /> <br />
+        @Html.TextBox("search", null, new { @class = "form-control" }) <br />
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+}
 
 <h2>Actors</h2>
 <p>
@@ -35,13 +46,13 @@
 </p>
 @using (Html.BeginForm("Delete", "Actor", FormMethod.Post))
 {
-    <table class="table">
+    <table class="table table-bordered table-hover">
         <tr>
             <th>
-                <input type="checkbox" id="checkAll"  hidden/> <br /> <text id="txtAll" style="font-size:small" hidden>All</text>
+                <input type="checkbox" id="checkAll" hidden /> <br /> <text id="txtAll" style="font-size:small" hidden>All</text>
             </th>
             <th>
-               <h4><b>Name</b></h4> 
+                <h4><b>Name</b></h4>
             </th>
             <th>
                 <h4><b> @Html.DisplayNameFor(model => model.Gender)</b></h4>
@@ -53,47 +64,59 @@
                 <h4><b>Age</b></h4>
             </th>
             <th>
-                <h4><input type="button" value="Select" class="btn btn-primary" id="btnSelect" /></h4> 
+                <h4><input type="button" value="Select" class="btn btn-primary" id="btnSelect" /></h4>
             </th>
 
         </tr>
-
-        @foreach (var item in Model)
+        @if (Model.Count() == 0)
         {
             <tr>
-                <td>
-                    <h4>
-                        <input type="checkbox" id="IdsCheckDelete" name="CheckDelete" value="@item.Actor_Id" hidden /> 
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Actor_Id }, new { @style = "display:none" , @name = "link" })
-                    </h4>
-
+                <td colspan="4">
+                    No Actor has been found! , please search again
                 </td>
-                @using (Html.BeginForm("Delete_One", "Actor", new { id = @item.Actor_Id }, FormMethod.Post))
-                {
-
-                    <td>
-                        @Html.ActionLink(@item.FirstName +" "+ @item.LastName, "Details", new { id =item.Actor_Id})
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Gender)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DateOfBirth)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Age) Years
-                    </td>
-                    <td>
-                        <input type="submit" value="Delete" class="btn btn-danger"
-                               onclick="return confirm('Are u Sure Delete Mr/Ms : @item.LastName');" /> 
-                    </td>
-                }
             </tr>
-
         }
+        else
+        {
+
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <h4>
+                            <input type="checkbox" id="IdsCheckDelete" name="CheckDelete" value="@item.Actor_Id" hidden />
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Actor_Id }, new { @style = "display:none", @name = "link" })
+                        </h4>
+
+                    </td>
+                    @using (Html.BeginForm("Delete_One", "Actor", new { id = @item.Actor_Id }, FormMethod.Post))
+                    {
+
+                        <td>
+                            @Html.ActionLink(@item.FirstName + " " + @item.LastName, "Details", new { id = item.Actor_Id })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Gender)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateOfBirth)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Age) Years
+                        </td>
+                        <td>
+                            <input type="submit" value="Delete" class="btn btn-danger"
+                                   onclick="return confirm('Are u Sure Delete Mr/Ms : @item.LastName');" />
+                        </td>
+                    }
+                </tr>
+
+            }
+        }
+
 
     </table>
     <div>
-        <input type="submit" value="Delete Selected Actor" id="btnDeleteAll" class="btn btn-danger"  style="display:none"/>
+        <input type="submit" value="Delete Selected Actor" id="btnDeleteAll" class="btn btn-danger" style="display:none" />
     </div>
 }

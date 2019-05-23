@@ -11,25 +11,39 @@ namespace CinemaNews.Controllers
     public class ActorController : Controller
     {
         private DBHollywoodContext db = new DBHollywoodContext();
-        public ActionResult List()
+        public ActionResult List(string search , string searchBy)
         {
-            return View(db.Actors.ToList());
-        }
-
-        [HttpPost]
-        public ActionResult List(string searchTerm)
-        {
-            List<Actor> actors = new List<Actor>();
-            if (string.IsNullOrEmpty(searchTerm))
+            if (string.IsNullOrWhiteSpace(search))
             {
-                actors = db.Actors.ToList();
+                return View(db.Actors.ToList());
             }
             else
             {
-                actors = db.Actors.Where(act => act.FirstName.StartsWith(searchTerm) || act.LastName.StartsWith(searchTerm)).ToList();
+                if (searchBy == "Name")
+                {
+                    return View(db.Actors.Where(act => (act.FirstName.StartsWith(search) || act.LastName.StartsWith(search))));
+                }
+                else
+                {
+                    return View(db.Actors.Where(act => act.Gender.StartsWith(search)));
+                }
             }
-            return View(actors);
         }
+
+        //[HttpPost]
+        //public ActionResult List(string searchTerm)
+        //{
+        //    List<Actor> actors = new List<Actor>();
+        //    if (string.IsNullOrEmpty(searchTerm))
+        //    {
+        //        actors = db.Actors.ToList();
+        //    }
+        //    else
+        //    {
+        //        actors = db.Actors.Where(act => act.FirstName.StartsWith(searchTerm) || act.LastName.StartsWith(searchTerm)).ToList();
+        //    }
+        //    return View(actors);
+        //}
 
         public JsonResult GetCompleteSearch(string term)
         {
