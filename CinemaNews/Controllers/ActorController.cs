@@ -20,7 +20,7 @@ namespace CinemaNews.Controllers
         public ActionResult List(string searchTerm)
         {
             List<Actor> actors = new List<Actor>();
-            if(string.IsNullOrEmpty(searchTerm))
+            if (string.IsNullOrEmpty(searchTerm))
             {
                 actors = db.Actors.ToList();
             }
