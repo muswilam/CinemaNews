@@ -20,22 +20,14 @@
         });
     </script>
 
-    <br />
-    <div style="float:right">
-        @using (Html.BeginForm("List", "Actor"))
-        {
-            @Html.TextBox("searchTerm", null, new { @class = "form-control", id = "txtSearch" }) <br />
-            <input type="submit" value="Search" class="btn btn-primary" />
-        }
-    </div>*@
-
+*@
 <br />
-@using (Html.BeginForm("List", "Actor", FormMethod.Get))
+@using (Html.BeginForm("List", "Actor", FormMethod.Post))
 {
     <div style="float:right">
         Search By : @Html.RadioButton("searchBy", "Name", true) Name
         @Html.RadioButton("searchBy", "Gender") Gender <br /> <br />
-        @Html.TextBox("search", null, new { @class = "form-control" }) <br />
+        @Html.TextBox("search", null, new { @class = "form-control" , id= "txtSearch"}) <br />
         <button type="submit" class="btn btn-primary">Search</button>
     </div>
 }
@@ -46,7 +38,7 @@
 </p>
 @using (Html.BeginForm("Delete", "Actor", FormMethod.Post))
 {
-    <table class="table table-bordered table-hover">
+    <table class="table">
         <tr>
             <th>
                 <input type="checkbox" id="checkAll" hidden /> <br /> <text id="txtAll" style="font-size:small" hidden>All</text>
@@ -120,3 +112,13 @@
         <input type="submit" value="Delete Selected Actor" id="btnDeleteAll" class="btn btn-danger" style="display:none" />
     </div>
 }
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(function () {
+            $("#txtSearch").autocomplete({
+                source: '@Url.Action("GetCompletedSearch")'
+            });
+        });
+    });
+</script>

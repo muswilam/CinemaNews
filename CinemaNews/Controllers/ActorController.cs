@@ -11,46 +11,39 @@ namespace CinemaNews.Controllers
     public class ActorController : Controller
     {
         private DBHollywoodContext db = new DBHollywoodContext();
+        public ActionResult List()
+        {
+            return View(db.Actors.ToList());
+        }
+
+        [HttpPost]
         public ActionResult List(string search , string searchBy)
         {
-            if (string.IsNullOrWhiteSpace(search))
+            List<Actor> actors = new List<Actor>();
+            if(string.IsNullOrWhiteSpace(search))
             {
-                return View(db.Actors.ToList());
+                actors = db.Actors.ToList(); 
             }
             else
             {
-                if (searchBy == "Name")
+                if(searchBy == "Name")
                 {
-                    return View(db.Actors.Where(act => (act.FirstName.StartsWith(search) || act.LastName.StartsWith(search))));
+                   actors = db.Actors.Where(act => act.FirstName.StartsWith(search) || act.LastName.StartsWith(search) ).ToList();
                 }
                 else
                 {
-                    return View(db.Actors.Where(act => act.Gender.StartsWith(search)));
+                    actors = db.Actors.Where(act => act.Gender.StartsWith(search)).ToList();
                 }
             }
+            return View(actors);
         }
 
-        //[HttpPost]
-        //public ActionResult List(string searchTerm)
-        //{
-        //    List<Actor> actors = new List<Actor>();
-        //    if (string.IsNullOrEmpty(searchTerm))
-        //    {
-        //        actors = db.Actors.ToList();
-        //    }
-        //    else
-        //    {
-        //        actors = db.Actors.Where(act => act.FirstName.StartsWith(searchTerm) || act.LastName.StartsWith(searchTerm)).ToList();
-        //    }
-        //    return View(actors);
-        //}
-
-        public JsonResult GetCompleteSearch(string term)
+        public JsonResult GetCompletedSearch(string term)
         {
-            List<string> studentComplete = db.Actors.Where(act => act.FirstName.StartsWith(term) || act.LastName.StartsWith(term))
-                                             .Select(act => act.FirstName +" " + act.LastName).ToList();
-            return Json(studentComplete, JsonRequestBehavior.AllowGet);
+            List<string> actorComplete = db.Actors.Where(act => act.FirstName.StartsWith(term) || act.LastName.StartsWith(term))
+                                           .Select(act => act.FirstName + " " + act.LastName).ToList();
 
+            return Json(actorComplete, JsonRequestBehavior.AllowGet);
         }
 
         //Add new actor 
