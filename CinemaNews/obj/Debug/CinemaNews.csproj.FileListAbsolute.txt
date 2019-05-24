@@ -17,6 +17,10 @@ C:\Users\Magic\Documents\Visual Studio 2013\Projects\MVC Cource\CinemaNews\Cinem
 C:\Users\Magic\Documents\Visual Studio 2013\Projects\MVC Cource\CinemaNews\CinemaNews\bin\System.Web.Webpages.Razor.xml
 C:\Users\Magic\Documents\Visual Studio 2013\Projects\MVC Cource\CinemaNews\CinemaNews\bin\System.Web.Helpers.xml
 C:\Users\Magic\Documents\Visual Studio 2013\Projects\MVC Cource\CinemaNews\CinemaNews\bin\System.Web.Mvc.xml
-C:\Users\Magic\Documents\Visual Studio 2013\Projects\MVC Cource\CinemaNews\CinemaNews\obj\Debug\CinemaNews.csprojResolveAssemblyReference.cache
 C:\Users\Magic\Documents\Visual Studio 2013\Projects\MVC Cource\CinemaNews\CinemaNews\obj\Debug\CinemaNews.dll
 C:\Users\Magic\Documents\Visual Studio 2013\Projects\MVC Cource\CinemaNews\CinemaNews\obj\Debug\CinemaNews.pdb
+C:\Users\Magic\Documents\Visual Studio 2013\Projects\MVC Cource\CinemaNews\CinemaNews\bin\PagedList.dll
+C:\Users\Magic\Documents\Visual Studio 2013\Projects\MVC Cource\CinemaNews\CinemaNews\bin\PagedList.Mvc.dll
+C:\Users\Magic\Documents\Visual Studio 2013\Projects\MVC Cource\CinemaNews\CinemaNews\bin\PagedList.xml
+C:\Users\Magic\Documents\Visual Studio 2013\Projects\MVC Cource\CinemaNews\CinemaNews\bin\PagedList.Mvc.xml
+C:\Users\Magic\Documents\Visual Studio 2013\Projects\MVC Cource\CinemaNews\CinemaNews\obj\Debug\CinemaNews.csprojResolveAssemblyReference.cache

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CinemaNews.Models;
+using PagedList;
+using PagedList.Mvc;
 
 namespace CinemaNews.Controllers
 {
@@ -11,38 +13,60 @@ namespace CinemaNews.Controllers
     public class ActorController : Controller
     {
         private DBHollywoodContext db = new DBHollywoodContext();
-        public ActionResult List()
-        {
-            return View(db.Actors.ToList());
-        }
-
-        [HttpPost]
-        public ActionResult List(string search , string searchBy)
+        public ActionResult List(string search , string searchBy , int? page)
         {
             List<Actor> actors = new List<Actor>();
             if(string.IsNullOrWhiteSpace(search))
             {
-                actors = db.Actors.ToList(); 
+                actors = db.Actors.ToList();
             }
             else
             {
                 if(searchBy == "Name")
                 {
-                   actors = db.Actors.Where(act => act.FirstName.StartsWith(search) || act.LastName.StartsWith(search) ).ToList();
+                    actors = db.Actors.Where(act => act.FirstName.StartsWith(search) || act.LastName.StartsWith(search) || act.FirstName + " " + act.LastName == search).ToList();
                 }
                 else
                 {
                     actors = db.Actors.Where(act => act.Gender.StartsWith(search)).ToList();
                 }
             }
-            return View(actors);
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+            return View(actors.ToPagedList(pageNumber, pageSize));
         }
 
-        public JsonResult GetCompletedSearch(string term)
+        //filter searchng functionality
+        //[HttpPost , ActionName("List")]
+        //public ActionResult ListPost(string search, string searchBy , int? page)
+        //{
+        //    List<Actor> actors = new List<Actor>();
+        //    if (string.IsNullOrWhiteSpace(search))
+        //    {
+        //        actors = db.Actors.ToList();
+        //    }
+        //    else
+        //    {
+        //        if (searchBy == "Name")
+        //        {
+        //            actors = db.Actors.Where(act => act.FirstName.StartsWith(search) || act.LastName.StartsWith(search)).ToList();
+        //        }
+        //        else
+        //        {
+        //            actors = db.Actors.Where(act => act.Gender.StartsWith(search)).ToList();
+        //        }
+        //    }
+        //    int pageSize = 5;
+        //    int pageNumber = (page ?? 1);
+        //    return View(actors.ToPagedList(pageNumber , pageSize));
+        //}
+
+
+        // autocomplete search text
+        public JsonResult GetCompletedSearch(string term )
         {
             List<string> actorComplete = db.Actors.Where(act => act.FirstName.StartsWith(term) || act.LastName.StartsWith(term))
                                            .Select(act => act.FirstName + " " + act.LastName).ToList();
-
             return Json(actorComplete, JsonRequestBehavior.AllowGet);
         }
 

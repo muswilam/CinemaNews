@@ -1,4 +1,7 @@
-﻿@model IEnumerable<CinemaNews.Models.Actor>
+﻿@model PagedList.IPagedList<CinemaNews.Models.Actor>
+@using PagedList.Mvc;
+
+<link href="~/Content/PagedList.css" rel="stylesheet" />
 
 @{
     ViewBag.Title = "Actors";
@@ -12,21 +15,13 @@
 
 <script src="~/Custom_Scripts/CheckBox_SelectALl.js"></script>
 
-@*<script type="text/javascript" language="javascript">
-        $(function () {
-            $('#txtSearch').autocomplete({
-                source: '@Url.Action("GetCompleteSearch")'
-            });
-        });
-    </script>
 
-*@
 <br />
-@using (Html.BeginForm("List", "Actor", FormMethod.Post))
+@using (Html.BeginForm("List", "Actor"))
 {
     <div style="float:right">
         Search By : @Html.RadioButton("searchBy", "Name", true) Name
-        @Html.RadioButton("searchBy", "Gender") Gender <br /> <br />
+                    @Html.RadioButton("searchBy", "Gender") Gender <br /> <br />
         @Html.TextBox("search", null, new { @class = "form-control" , id= "txtSearch"}) <br />
         <button type="submit" class="btn btn-primary">Search</button>
     </div>
@@ -47,10 +42,10 @@
                 <h4><b>Name</b></h4>
             </th>
             <th>
-                <h4><b> @Html.DisplayNameFor(model => model.Gender)</b></h4>
+                <h4><b> @Html.DisplayNameFor(model => model.First().Gender)</b></h4>
             </th>
             <th>
-                <h4><b> @Html.DisplayNameFor(model => model.DateOfBirth)</b></h4>
+                <h4><b> @Html.DisplayNameFor(model => model.First().DateOfBirth)</b></h4>
             </th>
             <th>
                 <h4><b>Age</b></h4>
@@ -85,7 +80,7 @@
                     {
 
                         <td>
-                            @Html.ActionLink(@item.FirstName + " " + @item.LastName, "Details", new { id = item.Actor_Id })
+                            @Html.ActionLink(@item.FullName, "Details", new { id = item.Actor_Id })
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Gender)
@@ -112,6 +107,12 @@
         <input type="submit" value="Delete Selected Actor" id="btnDeleteAll" class="btn btn-danger" style="display:none" />
     </div>
 }
+
+<br />
+ 
+ Page  @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+ 
+@Html.PagedListPager(Model, page => Url.Action("List", new { page , searchBy = Request.QueryString["searchBy"] , search = Request["search"]}))
 
 <script type="text/javascript">
     $(document).ready(function () {
