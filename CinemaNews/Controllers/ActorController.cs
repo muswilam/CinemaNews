@@ -13,27 +13,45 @@ namespace CinemaNews.Controllers
     public class ActorController : Controller
     {
         private DBHollywoodContext db = new DBHollywoodContext();
-        public ActionResult List(string search , string searchBy , int? page)
+        public ActionResult List(string searchBy, string search, int? page, string sortOrder)
         {
-            List<Actor> actors = new List<Actor>();
-            if(string.IsNullOrWhiteSpace(search))
+            var actors = db.Actors.AsQueryable();
+
+            ViewBag.NameSortOrder = string.IsNullOrEmpty(sortOrder) ? "Name_Desc" : "";
+            ViewBag.DateSortOrder = sortOrder == "Date" ? "Date_Desc" : "Date";
+
+            if (!string.IsNullOrEmpty(search))
             {
-                actors = db.Actors.ToList();
-            }
-            else
-            {
-                if(searchBy == "Name")
+                if (searchBy == "Name")
                 {
-                    actors = db.Actors.Where(act => act.FirstName.StartsWith(search) || act.LastName.StartsWith(search) || act.FirstName + " " + act.LastName == search).ToList();
+                    actors = actors.Where(act => act.FirstName.StartsWith(search) ||
+                                             act.LastName.StartsWith(search) ||
+                                             act.FirstName + " " + act.LastName == search);
                 }
                 else
                 {
-                    actors = db.Actors.Where(act => act.Gender.StartsWith(search)).ToList();
+                    actors = actors.Where(act => act.Gender.StartsWith(search));
                 }
             }
+            switch (sortOrder)
+            {
+                case "Name_Desc":
+                    actors = actors.OrderByDescending(act => act.FirstName);
+                    break;
+                case "Date":
+                    actors = actors.OrderBy(act => act.DateOfBirth);
+                    break;
+                case "Date_Desc":
+                    actors = actors.OrderByDescending(act => act.DateOfBirth);
+                    break;
+                default:
+                    actors = actors.OrderBy(act => act.FirstName);
+                    break;
+            }
+
             int pageSize = 5;
             int pageNumber = (page ?? 1);
-            return View(actors.ToPagedList(pageNumber, pageSize));
+            return View(actors.ToList().ToPagedList(pageNumber, pageSize));
         }
 
         //filter searchng functionality

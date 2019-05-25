@@ -18,8 +18,8 @@ namespace CinemaNews.Models
 
                 int todayDate = (today.Year * 100 + today.Month) * 100 + today.Day;
                 int birthDate = (DateOfBirth.Value.Year * 100 + DateOfBirth.Value.Month) * 100 + DateOfBirth.Value.Day;
-
-                return (todayDate - birthDate) / 10000;
+                int result = (todayDate - birthDate) / 10000;
+                return result;
             }
          
         }

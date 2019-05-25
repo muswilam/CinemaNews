@@ -17,7 +17,7 @@
 
 
 <br />
-@using (Html.BeginForm("List", "Actor"))
+@using (Html.BeginForm("List", "Actor", FormMethod.Get))
 {
     <div style="float:right">
         Search By : @Html.RadioButton("searchBy", "Name", true) Name
@@ -31,7 +31,7 @@
 <p>
     @Html.ActionLink("Add Actor", "Create")
 </p>
-@using (Html.BeginForm("Delete", "Actor", FormMethod.Post))
+@using (Html.BeginForm("Delete", "Actor"))
 {
     <table class="table">
         <tr>
@@ -39,16 +39,31 @@
                 <input type="checkbox" id="checkAll" hidden /> <br /> <text id="txtAll" style="font-size:small" hidden>All</text>
             </th>
             <th>
-                <h4><b>Name</b></h4>
+                <h4>
+                    <b>
+                        @Html.ActionLink("Name", "List", new
+                  {
+                      sortOrder = ViewBag.NameSortOrder,
+                      search = Request["search"],
+                      searchBy = Request["searchBy"]
+                  })
+                </b>
+            </h4>
             </th>
             <th>
                 <h4><b> @Html.DisplayNameFor(model => model.First().Gender)</b></h4>
             </th>
             <th>
-                <h4><b> @Html.DisplayNameFor(model => model.First().DateOfBirth)</b></h4>
-            </th>
-            <th>
-                <h4><b>Age</b></h4>
+                <h4>
+                    <b>
+                        @Html.ActionLink("Birthdate", "List", new
+                  {
+                      sortOrder = ViewBag.DateSortOrder,
+                      search = Request["search"],
+                      searchBy = Request["searchBy"]
+                  })
+                </b>
+            </h4>
             </th>
             <th>
                 <h4><input type="button" value="Select" class="btn btn-primary" id="btnSelect" /></h4>
@@ -89,9 +104,6 @@
                             @Html.DisplayFor(modelItem => item.DateOfBirth)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Age) Years
-                        </td>
-                        <td>
                             <input type="submit" value="Delete" class="btn btn-danger"
                                    onclick="return confirm('Are u Sure Delete Mr/Ms : @item.LastName');" />
                         </td>
@@ -112,7 +124,7 @@
  
  Page  @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
  
-@Html.PagedListPager(Model, page => Url.Action("List", new { page , searchBy = Request.QueryString["searchBy"] , search = Request["search"]}))
+@Html.PagedListPager(Model, page => Url.Action("List", new { page , searchBy = Request.QueryString["searchBy"] , search = Request["search"] , sortOrder = Request["sortOrder"]}))
 
 <script type="text/javascript">
     $(document).ready(function () {
